@@ -151,7 +151,6 @@ class CycleGANTraining(object):
         for epoch in range(self.start_epoch, self.num_epochs):
             print('epoch :{epoch}\n')
             start_time_epoch = time.time()
-.
             # Constants
             # λcyc and λid were set to 10 and 5, respectively,
             cycle_loss_lambda = 10
