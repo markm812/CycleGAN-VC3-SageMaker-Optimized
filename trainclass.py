@@ -373,7 +373,7 @@ class CycleGANTraining(object):
             librosa.output.write_wav(path=os.path.join(os.path.join(self.output_A_dir,str(epoch)), os.path.basename(file)),
                           y=rev.cpu().detach().numpy()[0],
                           sr=22050)
-    def validation_for_B_dir(self):
+    def validation_for_B_dir(self,epoch):
         os.makedirs(os.path.join(self.output_B_dir,str(epoch)),exist_ok=True)
         print("Generating Validation Data A from B...")
         for file in os.listdir(self.validation_B_dir):
