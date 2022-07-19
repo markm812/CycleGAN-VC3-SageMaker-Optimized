@@ -154,8 +154,8 @@ class CycleGANTraining(object):
             if self.vc_only:
                 # Validation Set
                 validation_start_time = time.time()
-                self.validation_for_A_dir()
-                self.validation_for_B_dir()
+                self.validation_for_A_dir(epoch)
+                self.validation_for_B_dir(epoch)
                 validation_end_time = time.time()
                 store_to_file = "Time taken for validation Set: {}".format(
                     validation_end_time - validation_start_time)
@@ -318,8 +318,8 @@ class CycleGANTraining(object):
             if epoch % 50 == 0 and epoch != 0:
                 # Validation Set
                 validation_start_time = time.time()
-                self.validation_for_A_dir()
-                self.validation_for_B_dir()
+                self.validation_for_A_dir(epoch)
+                self.validation_for_B_dir(epoch)
                 validation_end_time = time.time()
                 store_to_file = "Time taken for validation Set: {}".format(
                     validation_end_time - validation_start_time)
