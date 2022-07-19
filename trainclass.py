@@ -45,8 +45,10 @@ class CycleGANTraining(object):
           output_A_dir,
           validation_B_dir,
           output_B_dir,
+          vc_only,
           restart_training_at=None):
-      
+
+        self.vc_only = vc_only      
         self.start_epoch = 0
         self.num_epochs = 500000//70 # 500k iterations
         # epoch——使用整个训练样本集传播一次。
@@ -149,6 +151,18 @@ class CycleGANTraining(object):
     def train(self):
         # Training Begins
         for epoch in range(self.start_epoch, self.num_epochs):
+            if self.vc_only:
+                # Validation Set
+                validation_start_time = time.time()
+                self.validation_for_A_dir()
+                self.validation_for_B_dir()
+                validation_end_time = time.time()
+                store_to_file = "Time taken for validation Set: {}".format(
+                    validation_end_time - validation_start_time)
+                self.store_to_file(store_to_file)
+                print("Time taken for validation Set: {}".format(
+                    validation_end_time - validation_start_time))
+                return
             print(f'epoch :{epoch}\n')
             start_time_epoch = time.time()
             # Constants

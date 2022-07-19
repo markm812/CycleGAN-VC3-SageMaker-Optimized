@@ -36,7 +36,7 @@ if __name__ == '__main__':
     output_A_dir = './vcc2020_database_evaluation/vcc2020_database_evaluation/A2B_M1toM2'
     validation_B_dir = './vcc2020_database_evaluation/vcc2020_database_evaluation/SEM2'
     output_B_dir = './vcc2020_database_evaluation/vcc2020_database_evaluation/B2A_M2toM1'
-    
+    vc_only = False
 
     parser.add_argument('--cache_folder', type=str,
                         help="Cached location training dataset and stats", default=cache_folder)
@@ -52,6 +52,8 @@ if __name__ == '__main__':
                         help="Validation set for sound source B", default=validation_B_dir)
     parser.add_argument('--output_B_dir', type=str,
                         help="Output for converted sound Source B", default=output_B_dir)
+    parser.add_argument('--vc_only', type=bool,
+                        help="Perform voicec clone only", default=vc_only)
 
    # argv = parser.parse_args()
     argv, unknown = parser.parse_known_args()
@@ -76,6 +78,7 @@ if __name__ == '__main__':
               output_A_dir = output_A_dir,
               validation_B_dir = validation_B_dir,      
               output_B_dir = output_B_dir
+              vc_only = vc_only
               )
     gc.collect()
     cycleGAN.train()
