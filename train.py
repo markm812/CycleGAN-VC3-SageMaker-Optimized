@@ -65,7 +65,7 @@ if __name__ == '__main__':
     output_A_dir = argv.output_A_dir
     validation_B_dir = argv.validation_B_dir
     output_B_dir = argv.output_B_dir
-
+    vc_only = argv.vc_only
     # Check whether following cached files exists
     if not os.path.exists(os.path.join(cache_folder, 'norm_stats.npz')):
         print(
@@ -77,8 +77,8 @@ if __name__ == '__main__':
               validation_A_dir = validation_A_dir,          
               output_A_dir = output_A_dir,
               validation_B_dir = validation_B_dir,      
-              output_B_dir = output_B_dir
-              vc_only = vc_only
+              output_B_dir = output_B_dir,
+              vc_only = vc_only      
               )
     gc.collect()
     cycleGAN.train()
