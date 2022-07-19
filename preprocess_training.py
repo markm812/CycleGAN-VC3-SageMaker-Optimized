@@ -115,9 +115,6 @@ class generatetrainingDataset(Dataset):
     def __len__(self):
         return min(len(self.datasetA), len(self.datasetB))
 
-path="/content/drive/MyDrive/My_CycleGAN"
-os.chdir(path)
-
 def buildTrainset(source_path = './vcc2020_database_training_source/source/SEM1/',target_path = './vcc2020_database_training_target_task1/target_task1/TEM2/',cache_folder = './cache/'):
 
     print('building training dataset...')
