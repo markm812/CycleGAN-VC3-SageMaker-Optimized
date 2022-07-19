@@ -149,7 +149,7 @@ class CycleGANTraining(object):
     def train(self):
         # Training Begins
         for epoch in range(self.start_epoch, self.num_epochs):
-            print('epoch :{epoch}\n')
+            print(f'epoch :{epoch}\n')
             start_time_epoch = time.time()
             # Constants
             # λcyc and λid were set to 10 and 5, respectively,
