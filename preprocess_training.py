@@ -80,11 +80,11 @@ class generatetrainingDataset(Dataset):
         self.datasetB = datasetB
         self.n_frames = n_frames
 
-        num_samples = min(len(dataset_A), len(dataset_B))
+        num_samples = min(len(datasetA), len(datasetB))
 
         # Shuffle, first num_samples
-        train_data_A_idx = np.arange(len(dataset_A)) # numpy.arange([start, ]stop, [step, ]dtype=None)
-        train_data_B_idx = np.arange(len(dataset_B))
+        train_data_A_idx = np.arange(len(datasetA)) # numpy.arange([start, ]stop, [step, ]dtype=None)
+        train_data_B_idx = np.arange(len(datasetB))
         np.random.shuffle(train_data_A_idx)
         np.random.shuffle(train_data_B_idx)
         train_data_A_idx_subset = train_data_A_idx[:num_samples]
@@ -93,14 +93,14 @@ class generatetrainingDataset(Dataset):
         train_data_A = list()
         train_data_B = list()
         for idx_A, idx_B in zip(train_data_A_idx_subset, train_data_B_idx_subset):
-            data_A = dataset_A[idx_A]
+            data_A = datasetA[idx_A]
             frames_A_total = data_A.shape[1] # 80, T
             assert frames_A_total >= n_frames
             start_A = np.random.randint(frames_A_total - n_frames + 1)
             end_A = start_A + n_frames
             train_data_A.append(data_A[:, start_A:end_A])
 
-            data_B = dataset_B[idx_B]
+            data_B = datasetB[idx_B]
             frames_B_total = data_B.shape[1]
             assert frames_B_total >= n_frames
             start_B = np.random.randint(frames_B_total - n_frames + 1)
@@ -132,13 +132,13 @@ def buildTrainset(source_path = './vcc2020_database_training_source/source/SEM1/
               mean_B=mel_mean_B,
               std_B=mel_std_B)
 
-    dataset_A = mel_normalized_A
-    dataset_B = mel_normalized_B
+    datasetA = mel_normalized_A
+    datasetB = mel_normalized_B
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 
-    dataset = generatetrainingDataset(datasetA=dataset_A,
-                  datasetB=dataset_B,
+    dataset = generatetrainingDataset(datasetA=datasetA,
+                  datasetB=datasetB,
                   n_frames=64)
     print(dataset.train_data_A.shape, dataset.train_data_B.shape) # (70, 80, 64) (70, 80, 64)
 
