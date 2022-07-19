@@ -149,9 +149,9 @@ class CycleGANTraining(object):
     def train(self):
         # Training Begins
         for epoch in range(self.start_epoch, self.num_epochs):
-            print('epoch :', epoch)
+            print('epoch :{epoch}\n')
             start_time_epoch = time.time()
-
+.
             # Constants
             # λcyc and λid were set to 10 and 5, respectively,
             cycle_loss_lambda = 10
@@ -287,7 +287,7 @@ class CycleGANTraining(object):
                             d_loss_B))
                 gc.collect()
 
-            if epoch % 2 == 0 and epoch != 0:
+            if epoch % 5 == 0 and epoch != 0:
                 end_time = time.time()
                 store_to_file = "Epoch: {} Generator Loss: {:.4f} Discriminator Loss: {}, Time: {:.2f}\n\n".format(
                     epoch, generator_loss.item(), d_loss.item(), end_time - start_time_epoch)
@@ -302,7 +302,7 @@ class CycleGANTraining(object):
                     self.modelCheckpoint + '_CycleGAN_CheckPoint'))
                 print("Model Saved!")
             
-            if epoch % 5 == 0 and epoch != 0:
+            if epoch % 50 == 0 and epoch != 0:
                 # Validation Set
                 validation_start_time = time.time()
                 self.validation_for_A_dir()
@@ -315,7 +315,8 @@ class CycleGANTraining(object):
                     validation_end_time - validation_start_time))
             
                 
-    def validation_for_A_dir(self):
+    def validation_for_A_dir(self,epoch):
+		os.mkdir(os.path.join(self.output_A_dir,epoch),exist_ok=True)
         print("Generating Validation Data B from A...")
         for file in os.listdir(self.validation_A_dir):
             wavpath = os.path.join(self.validation_A_dir, file)
@@ -356,10 +357,11 @@ class CycleGANTraining(object):
             rev = self.vocoder.inverse(torch.tensor(np.array([denorm_converted])).float()) 
             #display.display(display.Audio(rev.cpu().detach().numpy()[0], rate=22050))
 
-            librosa.output.write_wav(path=os.path.join(self.output_A_dir, os.path.basename(file)),
+            librosa.output.write_wav(path=os.path.join(os.path.join(self.output_A_dir,epoch), os.path.basename(file)),
                           y=rev.cpu().detach().numpy()[0],
                           sr=22050)
     def validation_for_B_dir(self):
+		os.path.join(self.output_B_dir,epoch)
         print("Generating Validation Data A from B...")
         for file in os.listdir(self.validation_B_dir):
             wavpath = os.path.join(self.validation_B_dir, file)
@@ -393,7 +395,7 @@ class CycleGANTraining(object):
             rev = self.vocoder.inverse(torch.tensor(np.array([denorm_converted])).float()) 
             #display.display(display.Audio(rev.cpu().detach().numpy()[0], rate=22050))
 
-            librosa.output.write_wav(path=os.path.join(self.output_B_dir, os.path.basename(file)),
+            librosa.output.write_wav(path=os.path.join(os.path.join(self.output_B_dir,epoch), os.path.basename(file)),
                           y=rev.cpu().detach().numpy()[0],
                           sr=22050)
 
